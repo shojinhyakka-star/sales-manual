@@ -17,6 +17,8 @@
         --text-color: #333333;
         --bg-paper: #fcfcfc;
         --font-main: 'Shippori Mincho', 'Yu Mincho', serif;
+        /* 数字用フォント：可読性の高いサンセリフ体 */
+        --font-num: 'Helvetica Neue', Arial, sans-serif;
       }
 
       html {
@@ -34,6 +36,10 @@
         padding: 0;
         text-orientation: mixed;
         height: 100%;
+        /* 欧文・数字のレンダリング最適化 */
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        /* PCではスクロールロック */
         overflow: hidden; 
       }
 
@@ -49,8 +55,10 @@
         column-width: 85vh;
         column-gap: 6rem;
         font-size: 11pt;
-        line-height: 1.9;
+        line-height: 1.8; /* 行間を少し締める */
         text-align: justify;
+        /* 文字詰め設定（プロポーショナルメトリクス） */
+        font-feature-settings: "palt"; 
       }
 
       /* セクション（章） */
@@ -66,7 +74,7 @@
       h1, h2, h3, h4 {
         font-family: var(--font-main);
         font-weight: 700;
-        line-height: 1.5;
+        line-height: 1.4;
       }
 
       h1.chapter-heading {
@@ -86,6 +94,7 @@
         border-right: 1px solid var(--secondary-color);
         padding: 0.8rem 0;
         margin-left: 2rem;
+        margin-bottom: 1.5rem; /* 見出し下の余白確保 */
       }
 
       h3 {
@@ -113,33 +122,46 @@
       .point-check strong {
         color: var(--primary-color); display: block; font-size: 1.1em; margin-left: 0.5em; border-bottom: 1px dashed #ccc; padding-bottom: 0.5em; margin-bottom: 0.5em;
       }
+      .worksheet-table {
+        border: 2px solid #333; padding: 1rem; margin: 1rem 0; font-size: 0.9em;
+      }
+      .worksheet-table table { width: 100%; border-collapse: collapse; }
+      .worksheet-table th, .worksheet-table td { border: 1px solid #999; padding: 0.5rem; vertical-align: top; }
+      .worksheet-table th { background-color: #eee; color: var(--accent-color); }
       
-      /* --- 縦中横（数字を正立させる設定） --- */
+      /* --- 【重要】縦中横（数字のデザイン修正） --- */
       .tcy { 
         text-combine-upright: all; 
         -webkit-text-combine: horizontal;
-        font-family: sans-serif; 
-        margin: 2px;
-        display: inline-block;
-        font-feature-settings: "pkna";
+        font-family: var(--font-num); 
+        margin: 0 0.1em; /* 前後の余白を最小限に */
+        font-weight: bold; /* 数字は少し太くして視認性を上げる */
+        vertical-align: baseline;
+        line-height: 1; /* 数字自体の行間を締める */
       }
       
       /* リスト設定 */
       ul, ol {
         padding: 0;
         margin: 0;
-        list-style: none; /* デフォルトの数字を消す */
+        list-style: none; /* デフォルトの記号を消す */
       }
       li {
         margin-top: 0.5rem;
         margin-left: 1rem;
-        text-indent: -1.5em; /* ぶら下げ */
-        padding-top: 1.5em; 
+        text-indent: -1.2em; /* ぶら下げ */
+        padding-top: 1.2em; 
       }
+      /* 箇条書きの記号（中黒） */
       ul li::before {
         content: "・";
-        margin-right: 0.5em;
+        margin-right: 0.3em; /* 記号と文字の間隔を調整 */
+        font-weight: bold;
+        color: var(--accent-color);
       }
+      /* 数字リスト（ol）には記号をつけない */
+      ol li::before { content: none; }
+
 
       /* --- 特殊ページ（表紙画像用・画面表示） --- */
       .cover-page {
@@ -170,12 +192,18 @@
         display: flex; 
         justify-content: flex-start; 
         align-items: baseline;
-        gap: 1em;
+        gap: 0.8em; /* 章番号とタイトルの間隔を調整 */
         text-indent: 0;
         padding-top: 0;
       }
-      .toc-list li::before { content: none; } /* 目次の黒丸を消す */
-      .toc-chapter { font-weight: bold; color: var(--primary-color); font-size: 1.1em; white-space: nowrap; }
+      .toc-list li::before { content: none; } /* 目次には中黒をつけない */
+      .toc-chapter { 
+        font-weight: bold; 
+        color: var(--primary-color); 
+        font-size: 1.1em; 
+        white-space: nowrap; 
+        font-family: var(--font-num); /* 章番号は見やすいフォントで */
+      }
 
       .page-header { position: absolute; top: -2rem; right: 0; font-size: 0.8rem; color: #999; }
 
@@ -931,7 +959,7 @@
         <p>受注後に崩れないために、最初に合意しておく境界線を<span class="tcy">5</span>つにまとめます。</p>
         <ul>
             <li><strong>目的の境界線</strong>：何のためにやるのか。優先順位は何か。</li>
-            <li><strong>範囲の境界線</strong>：どこまで含むか。含まないものは何か。</li>
+            <li><strong>範囲の境界線</strong>：どこまで含むか. 含まないものは何か。</li>
             <li><strong>役割の境界線</strong>：相手がやること、こちらがやること。</li>
             <li><strong>進め方の境界線</strong>：いつ、何を、どの順で進めるか。確認のタイミング。</li>
             <li><strong>連絡の境界線</strong>：連絡手段、返信の目安、緊急時の扱い。</li>
@@ -1180,7 +1208,7 @@
 <script>
   function scrollBook(direction) {
     const scrollAmount = window.innerWidth * 0.8;
-    // html, body, documentElementすべてに対してスクロールを試みる（ブラウザ互換性）
+    // html, body, documentElementすべてに対してスクロールを試みる
     window.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
     document.body.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
     document.documentElement.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
