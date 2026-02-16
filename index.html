@@ -90,8 +90,8 @@
         border-right: 1px solid var(--secondary-color);
         padding: 0.8rem 0;
         margin-left: 2rem;
-        margin-bottom: 0; /* 下の余白をなくして本文と揃える */
-        margin-top: 2rem; /* 上（左側）の余白 */
+        margin-bottom: 0;
+        margin-top: 2rem;
       }
 
       h3 {
@@ -137,11 +137,11 @@
         line-height: 1;
       }
       
-      /* リスト設定（・を削除） */
+      /* リスト設定（修正版） */
       ul, ol {
         padding: 0;
         margin: 0;
-        list-style: none; /* デフォルトの記号を消す */
+        list-style: none;
       }
       li {
         margin-top: 0.5rem;
@@ -149,18 +149,26 @@
         text-indent: -1.2em; /* ぶら下げ */
         padding-top: 1.2em; 
       }
-      /* すべてのリストで記号を非表示にする */
+      
+      /* すべてのリストで記号をリセット */
       ul li::before, ol li::before {
         content: none;
       }
 
-      /* 枠線内のリストだけ、視認性のために四角をつける（お好みで削除可） */
-      .point-check ul li::before, .highlight-box ul li::before {
+      /* ボックス内のリストにのみ、シンプルな四角（■）をつける */
+      .highlight-box ul li, .point-check ul li {
+          list-style: none;
+          position: relative;
+          padding-left: 0; /* インデント調整 */
+      }
+      
+      .highlight-box ul li::before, .point-check ul li::before {
         content: "■";
         color: var(--primary-color);
         font-size: 0.6em;
-        margin-right: 0.5em;
+        margin-right: 0.5em; /* 記号と文字の間隔 */
         vertical-align: middle;
+        display: inline-block; /* 縦書きでの配置調整 */
       }
 
 
@@ -287,15 +295,14 @@
             <li><span class="toc-chapter">序章</span> <span>高単価無形は「説明が上手い人」が売るんじゃない</span></li>
             <li><span class="toc-chapter">第<span class="tcy">1</span>章</span> <span>高単価無形でいちばん重要なのは「受ける相手を選ぶこと」</span></li>
             <li><span class="toc-chapter">第<span class="tcy">2</span>章</span> <span>商品を売るな。変化を売れ</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">3</span>章</span> <span>すべての始まりは「顧客理解」から</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">4</span>章</span> <span>売れるコンセプトの源泉「顧客の問題」を発掘する</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">5</span>章</span> <span>響く価値提案「ベネフィット」を定義する</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">6</span>章</span> <span>「本当に効くの？」信頼を勝ち取る方法</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">7</span>章</span> <span>コンセプトを魅力的に見せる「パッケージング」</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">8</span>章</span> <span>競合の中で輝く「ポジショニング」戦略</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">9</span>章</span> <span>「あなたから買いたい」を生み出す「差別化」戦略</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">10</span>章</span> <span>アイデアに詰まった時の処方箋</span></li>
-            <li><span class="toc-chapter">おわりに</span> <span>コンセプトは磨き続けるもの</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">3</span>章</span> <span>初回商談で決まる。ヒアリングは課題探しではない</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">4</span>章</span> <span>提案はプレゼンじゃない。判断を助ける道具である</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">5</span>章</span> <span>「検討します」は断り文句ではない。未処理の不安である</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">6</span>章</span> <span>クロージングは押す技術ではない。合意を積む技術である</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">7</span>章</span> <span>受注後に地獄を見ない。境界線の引き方</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">8</span>章</span> <span>売った後が本番。関係性で勝つ営業設計</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">9</span>章</span> <span>営業はセンスではない。型として身につける</span></li>
+            <li><span class="toc-chapter">おわりに</span> <span>書人百花として、あなたへ</span></li>
         </ul>
     </section>
 
