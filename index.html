@@ -17,7 +17,6 @@
         --text-color: #333333;
         --bg-paper: #fcfcfc;
         --font-main: 'Shippori Mincho', 'Yu Mincho', serif;
-        /* 数字用フォント：可読性の高いサンセリフ体 */
         --font-num: 'Helvetica Neue', Arial, sans-serif;
       }
 
@@ -36,10 +35,8 @@
         padding: 0;
         text-orientation: mixed;
         height: 100%;
-        /* 欧文・数字のレンダリング最適化 */
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
-        /* PCではスクロールロック */
         overflow: hidden; 
       }
 
@@ -55,9 +52,8 @@
         column-width: 85vh;
         column-gap: 6rem;
         font-size: 11pt;
-        line-height: 1.8; /* 行間を少し締める */
+        line-height: 1.8;
         text-align: justify;
-        /* 文字詰め設定（プロポーショナルメトリクス） */
         font-feature-settings: "palt"; 
       }
 
@@ -94,7 +90,8 @@
         border-right: 1px solid var(--secondary-color);
         padding: 0.8rem 0;
         margin-left: 2rem;
-        margin-bottom: 1.5rem; /* 見出し下の余白確保 */
+        margin-bottom: 0; /* 下の余白をなくして本文と揃える */
+        margin-top: 2rem; /* 上（左側）の余白 */
       }
 
       h3 {
@@ -129,18 +126,18 @@
       .worksheet-table th, .worksheet-table td { border: 1px solid #999; padding: 0.5rem; vertical-align: top; }
       .worksheet-table th { background-color: #eee; color: var(--accent-color); }
       
-      /* --- 【重要】縦中横（数字のデザイン修正） --- */
+      /* --- 縦中横 --- */
       .tcy { 
         text-combine-upright: all; 
         -webkit-text-combine: horizontal;
         font-family: var(--font-num); 
-        margin: 0 0.1em; /* 前後の余白を最小限に */
-        font-weight: bold; /* 数字は少し太くして視認性を上げる */
+        margin: 0 0.1em;
+        font-weight: bold;
         vertical-align: baseline;
-        line-height: 1; /* 数字自体の行間を締める */
+        line-height: 1;
       }
       
-      /* リスト設定 */
+      /* リスト設定（・を削除） */
       ul, ol {
         padding: 0;
         margin: 0;
@@ -152,15 +149,19 @@
         text-indent: -1.2em; /* ぶら下げ */
         padding-top: 1.2em; 
       }
-      /* 箇条書きの記号（中黒） */
-      ul li::before {
-        content: "・";
-        margin-right: 0.3em; /* 記号と文字の間隔を調整 */
-        font-weight: bold;
-        color: var(--accent-color);
+      /* すべてのリストで記号を非表示にする */
+      ul li::before, ol li::before {
+        content: none;
       }
-      /* 数字リスト（ol）には記号をつけない */
-      ol li::before { content: none; }
+
+      /* 枠線内のリストだけ、視認性のために四角をつける（お好みで削除可） */
+      .point-check ul li::before, .highlight-box ul li::before {
+        content: "■";
+        color: var(--primary-color);
+        font-size: 0.6em;
+        margin-right: 0.5em;
+        vertical-align: middle;
+      }
 
 
       /* --- 特殊ページ（表紙画像用・画面表示） --- */
@@ -192,17 +193,16 @@
         display: flex; 
         justify-content: flex-start; 
         align-items: baseline;
-        gap: 0.8em; /* 章番号とタイトルの間隔を調整 */
+        gap: 0.8em;
         text-indent: 0;
         padding-top: 0;
       }
-      .toc-list li::before { content: none; } /* 目次には中黒をつけない */
       .toc-chapter { 
         font-weight: bold; 
         color: var(--primary-color); 
         font-size: 1.1em; 
         white-space: nowrap; 
-        font-family: var(--font-num); /* 章番号は見やすいフォントで */
+        font-family: var(--font-num);
       }
 
       .page-header { position: absolute; top: -2rem; right: 0; font-size: 0.8rem; color: #999; }
@@ -287,14 +287,15 @@
             <li><span class="toc-chapter">序章</span> <span>高単価無形は「説明が上手い人」が売るんじゃない</span></li>
             <li><span class="toc-chapter">第<span class="tcy">1</span>章</span> <span>高単価無形でいちばん重要なのは「受ける相手を選ぶこと」</span></li>
             <li><span class="toc-chapter">第<span class="tcy">2</span>章</span> <span>商品を売るな。変化を売れ</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">3</span>章</span> <span>初回商談で決まる。ヒアリングは課題探しではない</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">4</span>章</span> <span>提案はプレゼンじゃない。判断を助ける道具である</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">5</span>章</span> <span>「検討します」は断り文句ではない。未処理の不安である</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">6</span>章</span> <span>クロージングは押す技術ではない。合意を積む技術である</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">7</span>章</span> <span>受注後に地獄を見ない。境界線の引き方</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">8</span>章</span> <span>売った後が本番。関係性で勝つ営業設計</span></li>
-            <li><span class="toc-chapter">第<span class="tcy">9</span>章</span> <span>営業はセンスではない。型として身につける</span></li>
-            <li><span class="toc-chapter">おわりに</span> <span>書人百花として、あなたへ</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">3</span>章</span> <span>すべての始まりは「顧客理解」から</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">4</span>章</span> <span>売れるコンセプトの源泉「顧客の問題」を発掘する</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">5</span>章</span> <span>響く価値提案「ベネフィット」を定義する</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">6</span>章</span> <span>「本当に効くの？」信頼を勝ち取る方法</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">7</span>章</span> <span>コンセプトを魅力的に見せる「パッケージング」</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">8</span>章</span> <span>競合の中で輝く「ポジショニング」戦略</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">9</span>章</span> <span>「あなたから買いたい」を生み出す「差別化」戦略</span></li>
+            <li><span class="toc-chapter">第<span class="tcy">10</span>章</span> <span>アイデアに詰まった時の処方箋</span></li>
+            <li><span class="toc-chapter">おわりに</span> <span>コンセプトは磨き続けるもの</span></li>
         </ul>
     </section>
 
@@ -308,9 +309,11 @@
         <p>ヒアリングも丁寧にした。<br>提案も、相手の状況に合わせて組み立てた。<br>こちらとしては「ここまで整えたなら、きっと前に進めるはず」と思っている。</p>
         <p>それなのに最後は、</p>
         <div class="highlight-box">
-            「一度、持ち帰って検討します」<br>
-            「社内（家族）で相談してみます」<br>
-            「今はタイミングが…」
+            <ul>
+                <li>「一度、持ち帰って検討します」</li>
+                <li>「社内（家族）で相談してみます」</li>
+                <li>「今はタイミングが…」</li>
+            </ul>
         </div>
         <p>で終わってしまう。</p>
         <p>その瞬間、胸の奥が少し冷える感じがして、帰り道に、ひとりで反省会が始まります。</p>
@@ -959,7 +962,7 @@
         <p>受注後に崩れないために、最初に合意しておく境界線を<span class="tcy">5</span>つにまとめます。</p>
         <ul>
             <li><strong>目的の境界線</strong>：何のためにやるのか。優先順位は何か。</li>
-            <li><strong>範囲の境界線</strong>：どこまで含むか. 含まないものは何か。</li>
+            <li><strong>範囲の境界線</strong>：どこまで含むか。含まないものは何か。</li>
             <li><strong>役割の境界線</strong>：相手がやること、こちらがやること。</li>
             <li><strong>進め方の境界線</strong>：いつ、何を、どの順で進めるか。確認のタイミング。</li>
             <li><strong>連絡の境界線</strong>：連絡手段、返信の目安、緊急時の扱い。</li>
